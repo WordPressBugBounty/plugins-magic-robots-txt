@@ -1,10 +1,10 @@
 === Magic robots.txt ===
 Contributors: ABCdatos
 Tags: robots,robots.txt,seo,google,bots
-Requires at least: 4.2
-Tested up to: 6.6
-Stable tag: 1.0.7
-Requires PHP: 5.4
+Requires at least: 4.4
+Tested up to: 7.0
+Stable tag: 1.0.8
+Requires PHP: 5.3
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,12 @@ This is not a security plugin, sorry, you should use a firewall or something lik
 4. Additional information in settings view while in debug mode.
 
 == Changelog ==
+
+
+= 1.0.8 - May 23, 2026 =
+- Better readiness for WordPress 7.0.
+- Polished the plugin experience and ongoing maintenance.
+- Improved robots.txt handling to keep things reliable and easy to manage.
 
 = 1.0.7 - Aug 5, 2024 =
 - Fixed bug when no initial configiration is done.

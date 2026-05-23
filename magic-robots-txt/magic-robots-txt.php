@@ -3,24 +3,17 @@
  * Plugin Name: Magic robots.txt
  * Plugin URI:  https://taller.abcdatos.net/robots-txt-wordpress/
  * Description: Manages robots access control via robots.txt
- * Version:     1.0.7
+ * Version:     1.0.8
  * Author:      ABCdatos
  * Author URI:  https://taller.abcdatos.net/
  * License:     GPLv2
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: magic-robots-txt
- * Domain Path: /languages
  *
  * @package magic-robots-txt
  */
 
 defined( 'ABSPATH' ) || die( esc_html( __( 'Access is not allowed.', 'magic-robots-txt' ) ) );
-
-/** Requerido o se obtiene error Plugin is not compatible with language packs: Missing load_plugin_textdomain(). en el canal de Slack #meta-language-packs. */
-function mrt_load_plugin_textdomain() {
-	load_plugin_textdomain( 'magic-robots-txt', false, basename( __DIR__ ) . '/languages' );
-}
-add_action( 'plugins_loaded', 'mrt_load_plugin_textdomain' );
 
 // Valores de configuración.
 require_once plugin_dir_path( __FILE__ ) . 'includes/configuracion.php';
@@ -37,8 +30,8 @@ if ( is_admin() ) {
 }
 
 // Prioridad de Yoast SEO es 99999.
-$other_robots_txt_priority = 99999;
-$my_robots_txt_priority    = $other_robots_txt_priority + 1;
+$mrt_other_robots_txt_priority = 99999;
+$mrt_robots_txt_priority       = $mrt_other_robots_txt_priority + 1;
 
 /** Funcionalidad del plugin modificando el contenido del robots.txt.
  *
@@ -94,7 +87,7 @@ function mrt_edita_robots_txt( $robots_txt_previo ) {
 
 	return $nuevo_robots_txt;
 }
-add_filter( 'robots_txt', 'mrt_edita_robots_txt', $my_robots_txt_priority );
+add_filter( 'robots_txt', 'mrt_edita_robots_txt', $mrt_robots_txt_priority );
 
 /** Versión del plugin para la cabecera de la página de opciones, obtenido de la cabecera de este archivo. */
 function mrt_get_version() {
@@ -135,7 +128,7 @@ function mrt_plugin_action_links( $links, $file ) {
 	}
 	if ( $file === $this_plugin ) {
 		// El valor del parámetro page es el slug de la página de opciones.
-		$settings_link = '<a href="' . esc_url( admin_url( 'admin.php?page=magic-robots-txt' ) ) . '" title="' . ucfirst( __( 'plugin settings', 'magic-robots-txt' ) ) . '">' . __( 'Settings' ) . '</a>';
+		$settings_link = '<a href="' . esc_url( admin_url( 'admin.php?page=magic-robots-txt' ) ) . '" title="' . ucfirst( __( 'plugin settings', 'magic-robots-txt' ) ) . '">' . esc_html__( 'Settings', 'magic-robots-txt' ) . '</a>';
 		array_unshift( $links, $settings_link );
 	}
 	return $links;

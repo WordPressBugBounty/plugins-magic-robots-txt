@@ -470,5 +470,8 @@ function mrt_convierte_a_regex( $cadena ) {
  */
 function mrt_subdirectorio_wp() {
 	$ruta = wp_parse_url( site_url(), PHP_URL_PATH );
+	if ( ! $ruta ) {
+		$ruta = '';
+	}
 	return $ruta;
 }

@@ -94,6 +94,7 @@ function mrt_sitemap_yoast_enabled() {
  */
 function mrt_sitemaps_enabled() {
 	$is_enabled = (bool) get_option( 'blog_public' );
+	// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Hook del core de WordPress.
 	$is_enabled = (bool) apply_filters( 'wp_sitemaps_enabled', $is_enabled );
 	$is_enabled = $is_enabled || mrt_sitemap_yoast_enabled();
 	return $is_enabled;

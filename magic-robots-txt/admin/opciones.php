@@ -33,7 +33,7 @@ function mrt_add_admin_menu() {
 		'manage_options',                                                     // Capability.
 		'magic-robots-txt',                                                   // Menu slug.
 		'mrt_admin',                                                          // Function.
-		'data:image/svg+xml;base64,' . $icono_base64,                         // Icon.
+		'data:image/svg+xml;base64,' . $icono_base64                         // Icon.
 	);
 }
 add_action( 'admin_menu', 'mrt_add_admin_menu' );
@@ -148,11 +148,69 @@ function mrt_on_option_update( $option_name ) {
 // Engancha la función al hook 'updated_option' de WordPress.
 add_action( 'updated_option', 'mrt_on_option_update', 10, 1 );
 
+/** Sanitiza un valor de texto para guardarlo en la configuración.
+ *
+ * @param string $valor Valor recibido.
+ * @return string
+ */
+function mrt_sanitiza_texto_opcion( $valor ) {
+	return sanitize_text_field( $valor );
+}
+
+/** Sanitiza una opción booleana para guardarla como 0 o 1.
+ *
+ * @param mixed $valor Valor recibido.
+ * @return int
+ */
+function mrt_sanitiza_booleano_opcion( $valor ) {
+	return absint( $valor ) ? 1 : 0;
+}
+
+/** Sanitiza una opción numérica de 1 a 4.
+ *
+ * @param mixed $valor Valor recibido.
+ * @return int
+ */
+function mrt_sanitiza_nivel_1_4( $valor ) {
+	$valor = absint( $valor );
+	if ( $valor < 1 || $valor > 4 ) {
+		$valor = 0;
+	}
+	return $valor;
+}
+
+/** Sanitiza una opción numérica general.
+ *
+ * @param mixed $valor Valor recibido.
+ * @return int
+ */
+function mrt_sanitiza_entero_opcion( $valor ) {
+	return absint( $valor );
+}
+
 /** Funcionalidad de la página de ajustes. */
 function mrt_settings_init() {
 	// Preproceso requerido de la lista de opciones.
+	$sanitizadores = array(
+		'mrt_version'              => 'mrt_sanitiza_texto_opcion',
+		'mrt_avanzado'             => 'mrt_sanitiza_booleano_opcion',
+		'mrt_buscadores'           => 'mrt_sanitiza_entero_opcion',
+		'mrt_redes_publicidad'     => 'mrt_sanitiza_booleano_opcion',
+		'mrt_analizadores_enlaces' => 'mrt_sanitiza_booleano_opcion',
+		'mrt_descargadores'        => 'mrt_sanitiza_booleano_opcion',
+		'mrt_carga'                => 'mrt_sanitiza_nivel_1_4',
+		'mrt_ahorro'               => 'mrt_sanitiza_nivel_1_4',
+		'mrt_venta_publicidad'     => 'mrt_sanitiza_booleano_opcion',
+		'mrt_venta_enlaces'        => 'mrt_sanitiza_booleano_opcion',
+		'mrt_usar_archivo'         => 'mrt_sanitiza_booleano_opcion',
+	);
+
 	foreach ( mrt_lista_opciones() as $nombre_opcion ) {
-		register_setting( 'magic-robots-txt-ajustes', $nombre_opcion );
+		$argumentos = array();
+		if ( isset( $sanitizadores[ $nombre_opcion ] ) ) {
+			$argumentos['sanitize_callback'] = $sanitizadores[ $nombre_opcion ];
+		}
+		register_setting( 'magic-robots-txt-ajustes', $nombre_opcion, $argumentos );
 	}
 
 	// Gestión de uso de archivo físico.
