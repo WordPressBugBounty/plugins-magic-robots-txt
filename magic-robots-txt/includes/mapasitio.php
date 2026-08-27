@@ -76,10 +76,11 @@ function mrt_sitemap_yoast_url() {
  */
 function mrt_sitemap_yoast_enabled() {
 	$is_enabled = 0;
-	if ( is_plugin_active( 'wordpress-seo' ) ) {
+	// Disponible al servir robots.txt virtual, a diferencia de is_plugin_active().
+	if ( defined( 'WPSEO_VERSION' ) ) {
 		$yoast_options = get_option( 'wpseo' );
-		if ( $yoast_options ) {
-			$is_enabled = $yoast_options['enable_xml_sitemap'];
+		if ( is_array( $yoast_options ) && isset( $yoast_options['enable_xml_sitemap'] ) ) {
+			$is_enabled = (bool) $yoast_options['enable_xml_sitemap'];
 		}
 	}
 	return $is_enabled;

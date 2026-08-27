@@ -306,7 +306,7 @@ function mrt_lista_robots( $tipo_robot ) {
 			$lista_robots = '*';
 			break;
 		case 1:
-			$lista_robots = 'Googlebot,Googlebot-News,Googlebot-Image,Googlebot-Video,Bingbot,Slurp,DuckDuckBot,Baiduspider,YandexBot,Applebot,ia_archiver,MojeekBot,PetalBot,SeekportBot,Neevabot,Owler@ows.eu/1Owler@ows.eu/2,Owler@ows.eu/X,netEstate NE Crawler';
+			$lista_robots = 'Googlebot,Googlebot-News,Googlebot-Image,Googlebot-Video,Bingbot,Slurp,DuckDuckBot,Baiduspider,YandexBot,Applebot,ia_archiver,MojeekBot,PetalBot,SeekportBot,Neevabot,Owler@ows.eu/1,Owler@ows.eu/2,Owler@ows.eu/X,netEstate NE Crawler';
 			break;
 		case 2:
 			$lista_robots = 'Mediapartners-Google,AdsBot-Google,proximic,CriteoBot/0.1,grapeshot';

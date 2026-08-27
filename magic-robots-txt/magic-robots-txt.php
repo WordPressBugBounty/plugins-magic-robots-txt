@@ -3,7 +3,9 @@
  * Plugin Name: Magic robots.txt
  * Plugin URI:  https://taller.abcdatos.net/robots-txt-wordpress/
  * Description: Manages robots access control via robots.txt
- * Version:     1.0.8
+ * Version:     1.1.0
+ * Requires at least: 5.5
+ * Requires PHP:      7.4
  * Author:      ABCdatos
  * Author URI:  https://taller.abcdatos.net/
  * License:     GPLv2

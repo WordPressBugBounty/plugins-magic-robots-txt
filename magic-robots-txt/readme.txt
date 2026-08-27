@@ -1,10 +1,10 @@
 === Magic robots.txt ===
 Contributors: ABCdatos
 Tags: robots,robots.txt,seo,google,bots
-Requires at least: 4.4
-Tested up to: 7.0
-Stable tag: 1.0.8
-Requires PHP: 5.3
+Requires at least: 5.5
+Tested up to: 7.1
+Stable tag: 1.1.0
+Requires PHP: 7.4
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -94,6 +94,13 @@ This is not a security plugin, sorry, you should use a firewall or something lik
 
 == Changelog ==
 
+
+= 1.1.0 - Aug 27, 2026 =
+- Raised the minimum requirements to WordPress 5.5 and PHP 7.4.
+- Improved Yoast SEO sitemap detection for virtual robots.txt requests.
+- Updated the declared WordPress compatibility to 7.1.
+- Fixed physical robots.txt regeneration on initial and unchanged settings saves.
+- Fixed the Owler user-agent list.
 
 = 1.0.8 - May 23, 2026 =
 - Better readiness for WordPress 7.0.

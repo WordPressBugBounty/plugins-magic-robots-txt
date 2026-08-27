@@ -126,27 +126,18 @@ function mrt_admin() {
 }
 
 /**
- * Maneja acciones posteriores a la actualización de opciones específicas del plugin.
+ * Programa la regeneración del archivo robots.txt después de guardar los ajustes.
  *
- * Esta función se engancha en la acción `updated_option` de WordPress y establece
- * un transitorio cuando se actualiza una opción relacionada con el plugin 'Magic robots.txt'.
- * Esto permite realizar acciones solo una vez después de que las opciones relevantes
- * han sido actualizadas, como regenerar archivos o limpiar cachés.
+ * Este filtro se ejecuta al crear una opción, actualizarla o guardar el mismo valor.
  *
- * @param string $option_name El nombre de la opción que se ha actualizado. Se espera que
- *                            comience con 'mrt_' para las opciones relevantes del plugin.
+ * @param mixed $valor Valor de la opción mrt_version.
+ * @return mixed Valor sin modificar.
  */
-function mrt_on_option_update( $option_name ) {
-	// Comprueba si la opción actualizada es relevante para el plugin.
-	if ( false !== strpos( $option_name, 'mrt_' ) ) {
-		// Establece un transitorio para indicar que una opción relevante ha sido actualizada.
-		// El transitorio 'mrt_settings_updated' se usa para desencadenar acciones específicas
-		// del plugin que solo deben ocurrir después de la actualización de la configuración.
-		set_transient( 'mrt_settings_updated', 'yes', 30 );
-	}
+function mrt_programa_regeneracion_robots( $valor ) {
+	set_transient( 'mrt_settings_updated', 'yes', 30 );
+	return $valor;
 }
-// Engancha la función al hook 'updated_option' de WordPress.
-add_action( 'updated_option', 'mrt_on_option_update', 10, 1 );
+add_filter( 'pre_update_option_mrt_version', 'mrt_programa_regeneracion_robots', 10, 1 );
 
 /** Sanitiza un valor de texto para guardarlo en la configuración.
  *
@@ -215,7 +206,7 @@ function mrt_settings_init() {
 
 	// Gestión de uso de archivo físico.
 	// if ( isset( $_GET['settings-updated'] ) ) {
-	// Mediante el transitorio creado en mrt_on_option_update, sabremso que se grabaron las opciones sin requerir
+	// Mediante el transitorio creado en mrt_programa_regeneracion_robots, sabemos que se grabaron las opciones sin requerir
 	// el acceso a $_GET y el consiguiente requisito de nonce de WPCS.
 	if ( get_transient( 'mrt_settings_updated' ) ) {
 		// Grabando ajustes es el momento de editar el archivo robots.txt físico si corresponde.
